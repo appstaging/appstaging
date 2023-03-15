@@ -1,110 +1,113 @@
 <head>
-<style>
-  body { overflow: hidden }
-</style>
-<script>
-  const draw = () => {
-    var b = document.body;
-    var c = document.getElementsByTagName('canvas')[0];
-    var a = c.getContext('2d');
-    document.body.clientWidth; // fix bug in webkit: http://qfox.nl/weblog/218
-    // Set correct resolution
-    c.width=b.offsetWidth;
-    c.height=b.offsetHeight;
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { overflow: hidden }
+  </style>
+  <script>
+    const draw = () => {
+      var b = document.body;
+      var c = document.getElementsByTagName('canvas')[0];
+      var a = c.getContext('2d');
+      document.body.clientWidth; // fix bug in webkit: http://qfox.nl/weblog/218
+      // Set correct resolution
+      c.width=b.offsetWidth;
+      c.height=b.offsetHeight;
 
-    var baseAngle = 0;
-    var rps = 0.05;
+      var baseAngle = 0;
+      var rps = 0.05;
 
-    function draw(dt) {
-      a.clearRect(0,0,c.width,c.height);
-      //a.fillStyle = 'rgba(183, 203, 198, 1)';
-      //a.fillRect(0,0,c.width,c.height);
-      
-      baseAngle += dt * rps;
-      
-      // line color
-      a.strokeStyle = 'black';
-      a.font = '16pt Helvetica';
-      
-      // Center point
-      var x = (c.width / 3) - 27;
-      var y = (3 * (c.height / 4)) - 22;
-      
-      a.fillText('STAGE', x - 94.5, y - 38, 91);
-      a.fillText('LIGHTS', x - 94.5, y - 20, 91);
-      a.fillText('CO.', x - 94.5, y - 2, 91);
-      
-      function arc(w, r, start, delta, rate) {
-        a.lineWidth = w;
-        a.beginPath();
-        var s = (((baseAngle * rate) + start) * Math.PI) % (2 * Math.PI);
-        a.arc(x, y, r, s, s + (delta * Math.PI), false);
-        a.stroke();
-      }
-      
-      // 1st row
-      arc(6, 150.5, 1.873, 0.315, 13);
-      arc(6, 150.5, 2.750, 0.315, 13);
-      
-      // 2nd row
-      arc(12, 161, 1.750, 0.375, 11);
-      arc(12, 161, 2.500, 0.375, 11);
-      
-      // 3rd row
-      arc(22, 179.5, 1.565, 0.435, 7);
-      arc(22, 179.5, 2.250, 0.740, 7);
-      
-      // 4th row
-      arc(45, 214.5, 1.500, 1.200, 5);
-      
-      // 5th row
-      arc(92, 284.5, 1.750, 1.150, 3)
-      
-      // 6th row
-      arc(183, 423.5, 1.439, 1.261, 2)
-      
-      // 7th row
-      arc(190, 612, 1.000, 1.500, 1);
-    }
-
-    // RequestAnimationFrame polyfill
-    (function() {
-        var lastTime = 0;
-        var vendors = ['webkit', 'moz'];
-        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-            window.cancelAnimationFrame =
-              window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+      function draw(dt) {
+        a.clearRect(0,0,c.width,c.height);
+        //a.fillStyle = 'rgba(183, 203, 198, 1)';
+        //a.fillRect(0,0,c.width,c.height);
+        
+        baseAngle += dt * rps;
+        
+        // line color
+        a.strokeStyle = 'black';
+        a.font = '16pt Helvetica';
+        
+        // Center point
+        var x = (c.width / 3) - 27;
+        var y = (3 * (c.height / 4)) - 22;
+        
+        a.fillText('STAGE', x - 94.5, y - 38, 91);
+        a.fillText('LIGHTS', x - 94.5, y - 20, 91);
+        a.fillText('CO.', x - 94.5, y - 2, 91);
+        
+        function arc(w, r, start, delta, rate) {
+          a.lineWidth = w;
+          a.beginPath();
+          var s = (((baseAngle * rate) + start) * Math.PI) % (2 * Math.PI);
+          a.arc(x, y, r, s, s + (delta * Math.PI), false);
+          a.stroke();
         }
+        
+        // 1st row
+        arc(6, 150.5, 1.873, 0.315, 13);
+        arc(6, 150.5, 2.750, 0.315, 13);
+        
+        // 2nd row
+        arc(12, 161, 1.750, 0.375, 11);
+        arc(12, 161, 2.500, 0.375, 11);
+        
+        // 3rd row
+        arc(22, 179.5, 1.565, 0.435, 7);
+        arc(22, 179.5, 2.250, 0.740, 7);
+        
+        // 4th row
+        arc(45, 214.5, 1.500, 1.200, 5);
+        
+        // 5th row
+        arc(92, 284.5, 1.750, 1.150, 3)
+        
+        // 6th row
+        arc(183, 423.5, 1.439, 1.261, 2)
+        
+        // 7th row
+        arc(190, 612, 1.000, 1.500, 1);
+      }
 
-        if (!window.requestAnimationFrame)
-            window.requestAnimationFrame = function(callback, element) {
-                var currTime = new Date().getTime();
-                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-                var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-                  timeToCall);
-                lastTime = currTime + timeToCall;
-                return id;
-            };
+      // RequestAnimationFrame polyfill
+      (function() {
+          var lastTime = 0;
+          var vendors = ['webkit', 'moz'];
+          for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+              window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+              window.cancelAnimationFrame =
+                window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+          }
 
-        if (!window.cancelAnimationFrame)
-            window.cancelAnimationFrame = function(id) {
-                clearTimeout(id);
-            };
-    }());
+          if (!window.requestAnimationFrame)
+              window.requestAnimationFrame = function(callback, element) {
+                  var currTime = new Date().getTime();
+                  var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                  var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                    timeToCall);
+                  lastTime = currTime + timeToCall;
+                  return id;
+              };
 
-    var lastTime = 0;
-    function mainLoop(t) {
-      dt = (t - lastTime) / 1000;
-      lastTime = t;
-      draw(dt);
+          if (!window.cancelAnimationFrame)
+              window.cancelAnimationFrame = function(id) {
+                  clearTimeout(id);
+              };
+      }());
+
+      var lastTime = 0;
+      function mainLoop(t) {
+        dt = (t - lastTime) / 1000;
+        lastTime = t;
+        draw(dt);
+        window.requestAnimationFrame(mainLoop);
+      }
       window.requestAnimationFrame(mainLoop);
     }
-    window.requestAnimationFrame(mainLoop);
-  }
 
-  document.addEventListener('DOMContentLoaded', draw)
-  window.addEventListener('resize', draw)
-</script>
+    document.addEventListener('DOMContentLoaded', draw)
+    window.addEventListener('resize', draw)
+  </script>
 </head>
-<body><canvas id="c"></canvas></body>
+<body>
+  <canvas id="c"></canvas>
+</body>
